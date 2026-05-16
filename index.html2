@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARDIRE Capital | Soluções em Crédito para Empresas e Pessoas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:#1a3150; --navy2:#213d63; --navy3:#162944;
+      --gold:#d5ad55; --gold2:#f0d489; --gold-dk:#8a6b2a;
+      --muted:#cbd5e1; --light:#f6f8fb; --warm:#ede8df; --dark:#0d1e30;
+      --border:rgba(255,255,255,.13); --border-l:rgba(26,49,80,.10);
+      --shadow:0 22px 55px rgba(0,0,0,.22);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Barlow',sans-serif;background:var(--navy3);color:white;line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .container{width:min(1180px,92%);margin:auto}
+
+    /* MARCA D'ÁGUA */
+    .watermark{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.04;z-index:0}
+    .watermark-text{position:absolute;white-space:nowrap;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+
+    /* TOPBAR */
+    .topbar{position:fixed;top:0;width:100%;z-index:999;background:rgba(22,41,68,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+    .nav{height:78px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+    .brand-top{display:flex;align-items:center;color:var(--gold)}
+    .brand-logo-img{max-height:48px;max-width:220px;object-fit:contain;display:block}
+    .brand-logo-text{display:none;font-family:'Barlow Condensed',sans-serif;line-height:1}
+    .brand-logo-text strong{display:block;font-size:1.08rem;letter-spacing:3px;color:#f8fafc;font-weight:700}
+    .brand-logo-text span{display:block;margin-top:5px;font-size:.58rem;letter-spacing:7px;color:var(--gold);font-weight:700}
+    .menu{display:flex;gap:22px;align-items:center;margin-left:auto}
+    .menu a{font-size:.86rem;color:var(--muted);transition:.25s;font-weight:500;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em}
+    .menu a:hover{color:var(--gold)}
+    .nav-dropdown{position:relative;display:flex;align-items:center;padding:10px 0}
+    .nav-dropdown-toggle{background:transparent;border:none;color:var(--muted);font-size:.86rem;font-weight:500;font-family:'Barlow Condensed',sans-serif;cursor:pointer;transition:.25s;padding:0;letter-spacing:.06em}
+    .nav-dropdown-toggle:hover{color:var(--gold)}
+    .nav-dropdown-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(8px);min-width:240px;background:rgba(22,41,68,.98);border:1px solid rgba(213,173,85,.38);border-radius:14px;padding:12px;box-shadow:0 24px 50px rgba(0,0,0,.3);opacity:0;visibility:hidden;pointer-events:none;transition:.25s ease;z-index:1000}
+    .nav-dropdown:hover>.nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    .nav-dropdown-menu a{display:block;padding:9px 12px;border-radius:9px;color:var(--muted);font-size:.86rem;font-weight:500}
+    .nav-dropdown-menu a:hover{background:rgba(213,173,85,.12);color:var(--gold)}
+    .nav-btn{border:1px solid var(--gold);color:var(--gold)!important;padding:9px 18px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;letter-spacing:.08em}
+    .hamburger{display:none;background:transparent;border:1px solid var(--border);color:white;border-radius:8px;font-size:1.35rem;width:38px;height:38px;cursor:pointer}
+
+    /* HERO */
+    .hero{min-height:100vh;padding-top:78px;display:flex;align-items:center;position:relative;overflow:hidden;
+      background:linear-gradient(rgba(13,30,48,0.82),rgba(13,30,48,0.88)),
+      url('https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat}
+    .hero .watermark{opacity:.05}
+    .hero-inner{position:relative;z-index:1;padding:4rem 0}
+    .hero-logo{margin-bottom:1.35rem;width:min(610px,92vw)}
+    .hero-logo-img{width:100%;height:auto;max-height:none;object-fit:contain;object-position:left center}
+    .hero-logo-text{display:none;font-family:'Barlow Condensed',sans-serif}
+    .hero-logo-text .h-ardire{font-size:clamp(64px,10vw,108px);font-weight:700;line-height:.88;letter-spacing:4px;text-transform:uppercase;color:#f8fafc;display:block}
+    .hero-logo-text .h-capital{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:clamp(18px,2.8vw,32px);font-weight:600;text-transform:uppercase;color:var(--gold)}
+    .hero-logo-text .h-capital span{display:inline-block}
+    .hero-tagline{font-size:clamp(10px,1.2vw,14px);font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(213,173,85,.75);margin-bottom:1.5rem}
+    .hero p{color:var(--muted);font-size:1.06rem;max-width:680px;margin-bottom:2rem;line-height:1.75}
+    .actions{display:flex;flex-wrap:wrap;gap:14px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;padding:13px 26px;border-radius:999px;font-weight:600;cursor:pointer;transition:.25s;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;letter-spacing:.06em;border:none}
+    .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy3)}
+    .btn-secondary{border:1px solid var(--gold)!important;color:var(--gold);background:transparent}
+    .btn-dk{border:1px solid var(--gold-dk)!important;color:var(--gold-dk);background:transparent}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.22)}
+
+    /* TARJA PRODUTOS DESTAQUE */
+    .top-products{background:var(--navy2);border-bottom:3px solid var(--gold)}
+    .top-products-inner{display:flex}
+    .top-prod-item{flex:1;padding:1.1rem 1rem;border-right:1px solid var(--border);cursor:pointer;transition:.22s;text-align:center;text-decoration:none;display:block}
+    .top-prod-item:last-child{border-right:none}
+    .top-prod-item:hover{background:rgba(213,173,85,.10)}
+    .top-prod-icon{font-size:1.5rem;margin-bottom:.3rem}
+    .top-prod-label{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    .top-prod-item.hot .top-prod-label{color:var(--gold)}
+    .top-prod-badge{display:inline-block;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--navy3);padding:.15rem .5rem;border-radius:999px;margin-top:.25rem}
+
+    /* STRIP NÚMEROS */
+    .num-strip{background:var(--gold);padding:1.8rem 0}
+    .num-strip-inner{display:flex;justify-content:center;flex-wrap:wrap;gap:3rem}
+    .num-item{text-align:center;color:var(--navy3)}
+    .num-item strong{display:block;font-size:1.55rem;font-weight:700;font-family:'Barlow Condensed',sans-serif}
+    .num-item span{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+
+    /* SECTIONS */
+    section{padding:84px 0;scroll-margin-top:90px}
+    .sec-dark{background:var(--navy);position:relative;overflow:hidden;color:white}
+    .sec-light{background:var(--light);color:#1a2a3a}
+    .sec-warm{background:var(--warm);color:#1a2a3a}
+
+    .eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:.74rem;font-weight:700;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif}
+    .sec-dark .eyebrow{color:var(--gold)}
+    .sec-light .eyebrow,.sec-warm .eyebrow{color:var(--gold-dk)}
+    .section-title{max-width:820px;margin-bottom:38px}
+    .section-title h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.85rem,3.2vw,2.75rem);line-height:1.18;margin-bottom:12px;font-weight:400}
+    .section-title p{opacity:.76;font-size:.98rem}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+    /* CARDS */
+    .card{border-radius:20px;padding:26px;transition:.25s;display:block}
+    .sec-dark .card{background:rgba(255,255,255,.06);border:1px solid var(--border)}
+    .sec-light .card,.sec-warm .card{background:white;border:1px solid rgba(26,49,80,.09);box-shadow:0 12px 28px rgba(26,49,80,.07);color:#1a2a3a}
+    .card:hover{transform:translateY(-5px);border-color:rgba(213,173,85,.5)!important}
+    .card-icon{font-size:2rem;margin-bottom:14px;display:block}
+    .sec-dark .card h3{color:var(--gold)}
+    .sec-light .card h3,.sec-warm .card h3{color:var(--gold-dk)}
+    .card h3{margin-bottom:9px;font-size:1.05rem}
+    .sec-dark .card p{color:var(--muted)}
+    .sec-light .card p,.sec-warm .card p{color:#475569}
+    .card p{font-size:.93rem;line-height:1.65}
+    .sec-dark .solution-link{color:var(--gold)}
+    .sec-light .solution-link,.sec-warm .solution-link{color:var(--gold-dk)}
+    .solution-link{margin-top:14px;display:inline-block;font-weight:600;font-size:.88rem}
+    .card.destaque{border:2px solid var(--gold)!important;background:rgba(213,173,85,.07)!important}
+    .sec-light .card.destaque,.sec-warm .card.destaque{background:rgba(138,107,42,.05)!important;border-color:var(--gold-dk)!important}
+    .destaque-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--gold);color:var(--navy3);font-family:'Barlow Condensed',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .8rem;border-radius:999px;margin-bottom:14px}
+
+    /* SPLIT */
+    .split-section{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+    .split-section.reverse{direction:rtl}
+    .split-section.reverse>*{direction:ltr}
+    .split-photo{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3;background:var(--navy2)}
+    .split-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo-placeholder{color:rgba(255,255,255,.25);font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:3rem 2rem;display:flex;align-items:center;justify-content:center;height:100%}
+
+    /* SOBRE */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+    .about-image{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3;background:var(--navy2)}
+    .about-image img{width:100%;height:100%;object-fit:cover;display:block}
+    .text p{margin-bottom:14px;opacity:.82;font-size:.95rem}
+
+    /* PARCEIROS */
+    .parceiros{background:var(--navy3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2.5rem 0}
+    .parceiros-label{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(213,173,85,.6);text-align:center;margin-bottom:1.5rem}
+    .parceiros-grid{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2rem}
+    .parceiro-item{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);transition:.25s;padding:.5rem 1.2rem;border:1px solid rgba(255,255,255,.08);border-radius:8px}
+    .parceiro-item:hover{color:var(--gold);border-color:rgba(213,173,85,.3)}
+
+    /* PRODUTOS */
+    .product-page{padding:72px 0;border-top:1px solid rgba(255,255,255,.08)}
+    .sec-light .product-page{border-top:1px solid rgba(26,49,80,.10)}
+    .product-box{display:grid;grid-template-columns:.75fr 1.25fr;gap:32px;align-items:start;border-radius:22px;padding:30px}
+    .sec-dark .product-box{background:rgba(255,255,255,.045);border:1px solid var(--border)}
+    .sec-light .product-box{background:white;border:1px solid rgba(26,49,80,.09);box-shadow:0 8px 24px rgba(26,49,80,.06)}
+    .sec-dark .product-box h3{color:var(--gold)}
+    .sec-light .product-box h3{color:var(--gold-dk)}
+    .product-box h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;margin-bottom:8px;font-weight:400}
+    .sec-dark .product-box p,.sec-dark .product-box li{color:var(--muted)}
+    .sec-light .product-box p,.sec-light .product-box li{color:#475569}
+    .product-box p{margin-bottom:10px;font-size:.93rem}
+    .product-box ul{padding-left:18px;margin-bottom:16px}
+    .product-box li{margin-bottom:7px;font-size:.93rem}
+    .product-block{padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .sec-light .product-block{border-bottom:1px solid rgba(26,49,80,.08)}
+    .product-block strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:1.4px;margin-bottom:4px;font-family:'Barlow Condensed',sans-serif}
+    .sec-dark .product-block strong{color:var(--gold)}
+    .sec-light .product-block strong{color:var(--gold-dk)}
+    .product-block p{margin:0;font-size:.93rem}
+    .product-intro{margin-bottom:14px;font-size:.97rem}
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:1.4rem}
+    .step{display:flex;gap:1.1rem;align-items:flex-start}
+    .step-num{background:var(--gold);color:var(--navy3);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:.95rem}
+    .step-title{color:var(--gold);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-size:.88rem;text-transform:uppercase;margin-bottom:.25rem}
+    .step-desc{color:var(--muted);font-size:.88rem}
+
+    /* INVESTIDORES */
+    .inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .inv-card{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:16px;padding:22px;transition:.25s}
+    .inv-card:hover{border-color:rgba(213,173,85,.4)}
+    .inv-card h3{color:var(--gold);margin-bottom:9px;font-size:.98rem}
+    .inv-card p{color:var(--muted);font-size:.9rem}
+
+    /* CONTATO */
+    .contact-box{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    form{background:white;color:#1a2a3a;padding:30px;border-radius:20px;box-shadow:0 18px 45px rgba(26,49,80,.1)}
+    label{display:block;font-weight:600;margin-bottom:6px;font-size:.84rem}
+    input,textarea,select{width:100%;padding:12px;border:1px solid rgba(26,49,80,.18);border-radius:10px;margin-bottom:14px;font-size:.95rem;outline:none;font-family:'Barlow',sans-serif}
+    textarea{min-height:110px;resize:vertical}
+    input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+    .contact-info{background:var(--navy2);border:1px solid var(--border);border-radius:20px;padding:30px}
+    .contact-info h3{color:var(--gold);margin-bottom:14px;font-size:1.05rem}
+    .contact-info p{color:var(--muted);margin-bottom:9px;font-size:.93rem}
+    .socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .socials a{border:1px solid var(--gold);color:var(--gold);padding:8px 14px;border-radius:999px;font-size:.84rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em}
+
+    /* FOOTER */
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:44px 0 22px}
+    .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px;margin-bottom:26px}
+    footer h3,footer h4{color:var(--gold);margin-bottom:11px;font-size:.95rem}
+    footer p,footer a{color:var(--muted);display:block;margin-bottom:7px;font-size:.88rem}
+    .copy{border-top:1px solid var(--border);padding-top:16px;color:var(--muted);font-size:.78rem;opacity:.55}
+
+    /* WHATSAPP */
+    .wa-float{position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;background:#25d366;z-index:998;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:.25s}
+    .wa-float:hover{transform:scale(1.1)}
+    .wa-float svg{width:30px;height:30px;fill:white}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(20px);transition:.6s ease}
+    .reveal.active{opacity:1;transform:translateY(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:980px){
+      .hamburger{display:block}
+      .menu{position:fixed;top:78px;right:-100%;width:84%;height:calc(100vh - 78px);background:var(--navy2);flex-direction:column;align-items:flex-start;padding:26px;transition:.3s;border-left:1px solid var(--border)}
+      .menu.active{right:0}
+      .nav-dropdown{width:100%;display:block}
+      .nav-dropdown-toggle{width:100%;text-align:left}
+      .nav-dropdown-menu{position:static;transform:none;width:100%;min-width:0;margin-top:8px;opacity:1;visibility:visible;pointer-events:auto;box-shadow:none;display:none}
+      .nav-dropdown.active .nav-dropdown-menu{display:block;transform:none}
+      .about-grid,.split-section,.contact-box,.footer-grid,.product-box,.inv-grid{grid-template-columns:1fr;gap:2rem}
+      .split-section.reverse{direction:ltr}
+      .grid-3{grid-template-columns:repeat(2,1fr)}
+      .top-products-inner{flex-wrap:wrap}
+      .top-prod-item{min-width:50%;border-bottom:1px solid var(--border)}
+      section{padding:60px 0}
+    }
+    @media(max-width:640px){
+      .grid-3{grid-template-columns:1fr}
+      .btn{width:100%}
+      .num-strip-inner{gap:1.5rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="container nav">
+    <a href="#inicio" class="brand-top">
+      <img src="logo-ardire.png" alt="ARDIRE Capital" class="brand-logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="brand-logo-text"><strong>ARDIRE</strong><span>CAPITAL</span></span>
+    </a>
+    <button class="hamburger" id="hamburger">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button">Soluções ▾</button>
+        <div class="nav-dropdown-menu">
+          <a href="#para-empresas">Para Empresas</a>
+          <a href="#para-pessoas">Para Pessoas</a>
+          <a href="#produto-garantia">Garantia Locatícia</a>
+          <a href="#investidores">Investidores</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button">Para Empresas ▾</button>
+        <div class="nav-dropdown-menu">
+          <a href="#produto-maquininha">Antecipação de Maquininha</a>
+          <a href="#produto-recebiveis">Antecipação de Recebíveis</a>
+          <a href="#produto-capital-giro">Capital de Giro</a>
+          <a href="#produto-cobranca">Cobrança e Recuperação</a>
+          <a href="#produto-analise">Análise de Risco</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button">Para Pessoas ▾</button>
+        <div class="nav-dropdown-menu">
+          <a href="#produto-inss">Crédito INSS / Beneficiários</a>
+          <a href="#produto-clt">Crédito CLT</a>
+          <a href="#produto-equity">Home / Car Equity</a>
+          <a href="#produto-bnpl">Aluguel de Celular</a>
+          <a href="#produto-garantia">Garantia Locatícia</a>
+          <a href="#produto-seguros">Seguros</a>
+        </div>
+      </div>
+      <a href="#investidores">Investidores</a>
+      <a href="#contato" class="nav-btn">Fale Conosco</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="watermark" id="wm-hero"></div>
+  <div class="container hero-inner">
+    <div class="reveal">
+      <div class="hero-logo">
+        <img src="logo-ardire.png" alt="ARDIRE Capital" class="hero-logo-img">
+      </div>
+      <div class="hero-tagline">Soluções em Crédito para Empresas e Pessoas</div>
+      <p>Da solicitação à liberação em poucos cliques — crédito descomplicado para quem precisa resolver a vida e capital inteligente para empresas que não podem parar.</p>
+      <div class="actions">
+        <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-primary">Fale com um consultor</a>
+        <a href="#para-pessoas" class="btn btn-secondary">Conheça os produtos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TARJA PRODUTOS DESTAQUE (apenas 4) -->
+<div class="top-products">
+  <div class="top-products-inner container">
+    <a href="#produto-inss" class="top-prod-item hot">
+      <div class="top-prod-icon">⭐</div>
+      <div class="top-prod-label">Crédito INSS</div>
+      <div class="top-prod-badge">+ procurado</div>
+    </a>
+    <a href="#produto-clt" class="top-prod-item hot">
+      <div class="top-prod-icon">⭐</div>
+      <div class="top-prod-label">Crédito CLT</div>
+      <div class="top-prod-badge">+ procurado</div>
+    </a>
+    <a href="#produto-maquininha" class="top-prod-item hot">
+      <div class="top-prod-icon">💳</div>
+      <div class="top-prod-label">Maquininha</div>
+      <div class="top-prod-badge">empresas</div>
+    </a>
+    <a href="#produto-capital-giro" class="top-prod-item hot">
+      <div class="top-prod-icon">🏪</div>
+      <div class="top-prod-label">Capital de Giro</div>
+      <div class="top-prod-badge">empresas</div>
+    </a>
+  </div>
+</div>
+
+<!-- STRIP NÚMEROS -->
+<div class="num-strip">
+  <div class="container num-strip-inner">
+    <div class="num-item"><strong>Lei 14.430</strong><span>Securitizadora Regulamentada</span></div>
+    <div class="num-item"><strong>+10</strong><span>Produtos de Crédito</span></div>
+    <div class="num-item"><strong>3</strong><span>Empresas no Grupo Ardire</span></div>
+    <div class="num-item"><strong>100%</strong><span>Digital e Seguro</span></div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sec-light" id="sobre">
+  <div class="container about-grid">
+    <div class="text reveal">
+      <div class="section-title">
+        <div class="eyebrow">Sobre a ARDIRE</div>
+        <h2>Quem somos e como trabalhamos</h2>
+      </div>
+      <p>A Ardire Capital é uma securitizadora registrada e regulamentada pela Lei 14.430/2022, com toda a estrutura legal e técnica para oferecer crédito, antecipar recebíveis e emitir instrumentos financeiros com segurança.</p>
+      <p>O Grupo Ardire é formado pela Ardire Capital, pela Ardire Soluções e Corretagem de Seguros e pela Ardire Gestão e Participações — três empresas complementares que atuam de forma integrada para oferecer soluções financeiras completas.</p>
+      <p>Atuamos com clareza, agilidade e os mais altos padrões éticos — sempre alinhando os interesses dos nossos clientes e parceiros à solidez e à governança que o mercado exige.</p>
+      <div class="actions" style="margin-top:22px">
+        <a href="#contato" class="btn btn-dk">Entre em contato</a>
+      </div>
+    </div>
+    <div class="about-image reveal">
+      <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80"
+           alt="Crescimento financeiro"
+           onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>Foto carrega após publicação</div>'">
+    </div>
+  </div>
+</section>
+
+<!-- PARCEIROS -->
+<div class="parceiros">
+  <div class="container">
+    <div class="parceiros-label">Parceiros e Integrações</div>
+    <div class="parceiros-grid">
+      <div class="parceiro-item">Celsoin</div>
+      <div class="parceiro-item">Via Capital</div>
+      <div class="parceiro-item">Serasa</div>
+      <div class="parceiro-item">Tigre Branco Pay</div>
+      <div class="parceiro-item">CERC</div>
+      <div class="parceiro-item">B3</div>
+    </div>
+  </div>
+</div>
+
+<!-- PARA PESSOAS — fundo azul escuro -->
+<section class="sec-dark" id="para-pessoas">
+  <div class="watermark" id="wm-pessoas"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="split-section" style="margin-bottom:3.5rem">
+      <div class="reveal">
+        <div class="section-title">
+          <div class="eyebrow">Para Pessoas</div>
+          <h2>Crédito acessível para cada momento da sua vida</h2>
+          <p>Aposentado, CLT, autônomo ou beneficiário — temos uma solução no seu perfil. Rápido, sem burocracia e sem enrolação.</p>
+        </div>
+        <div class="actions">
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-primary">Simular agora pelo WhatsApp</a>
+        </div>
+      </div>
+      <div class="split-photo reveal">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+             alt="Pessoa resolvendo finanças"
+             onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>Foto carrega após publicação</div>'">
+      </div>
+    </div>
+    <div class="grid-3">
+      <a href="#produto-inss" class="card destaque reveal">
+        <div class="destaque-badge">⭐ Mais procurado</div>
+        <div class="card-icon">👴</div>
+        <h3>Crédito INSS / Beneficiários</h3>
+        <p>Para aposentados, pensionistas e beneficiários do INSS, LOAS e Bolsa Família. Desconto direto no benefício, parcelas menores e menos burocracia.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-clt" class="card destaque reveal">
+        <div class="destaque-badge">⭐ Mais procurado</div>
+        <div class="card-icon">👷</div>
+        <h3>Crédito para CLT</h3>
+        <p>Tem carteira assinada? Use sua renda mensal para acessar crédito com taxas boas e aprovação rápida. Simples e sem surpresa.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-equity" class="card reveal">
+        <div class="card-icon">🏠</div>
+        <h3>Home / Car Equity</h3>
+        <p>Use seu imóvel ou veículo como garantia e acesse valores maiores com prazos mais longos e as melhores taxas do mercado.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-bnpl" class="card reveal">
+        <div class="card-icon">📱</div>
+        <h3>Aluguel de Celular</h3>
+        <p>Quer o aparelho mas não tem o valor à vista? Funciona como um crediário moderno — pague mensalmente e ao final decida se compra ou devolve.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-garantia" class="card reveal">
+        <div class="card-icon">🔑</div>
+        <h3>Garantia Locatícia</h3>
+        <p>Quer alugar um imóvel sem precisar de fiador? A Ardire garante o contrato com agilidade e custo acessível.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-seguros" class="card reveal">
+        <div class="card-icon">🛡️</div>
+        <h3>Seguros</h3>
+        <p>Seguro prestamista, de celular e de automóvel entre outros. Proteção para você e o que mais importa na sua vida.</p>
+        <span class="solution-link">Ver opções →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTOS PESSOAS — fundo azul -->
+<section class="sec-dark" id="produto-inss" style="padding-top:0">
+  <div class="container">
+    <div class="product-page">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Pessoas</div>
+          <h3>Crédito INSS / Beneficiários</h3>
+          <div class="destaque-badge" style="margin-top:.8rem">⭐ Mais procurado</div>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Simular agora</a>
+        </div>
+        <div>
+          <p class="product-intro">O produto mais solicitado da Ardire. Para quem recebe INSS, pensão, LOAS ou Bolsa Família e precisa de um dinheiro extra sem complicação.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Aposentados, pensionistas e beneficiários de qualquer programa social com pagamento mensal recorrente.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>O desconto sai direto do benefício todo mês — parcelas menores e taxas mais em conta. Sem precisar de garantia ou fiador.</p></div>
+          <div class="product-block"><strong>O que analisamos</strong><p>Número do benefício, margem disponível para desconto e documentação básica. Rápido e simples.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-page" id="produto-clt">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Pessoas</div>
+          <h3>Crédito para CLT</h3>
+          <div class="destaque-badge" style="margin-top:.8rem">⭐ Mais procurado</div>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Simular agora</a>
+        </div>
+        <div>
+          <p class="product-intro">Trabalhador com carteira assinada tem acesso a condições melhores de crédito. Usa sua renda comprovada para conseguir taxas mais justas.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Trabalhadores com vínculo CLT ativo que precisam de crédito pessoal — para qualquer finalidade, sem precisar justificar.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>Analisamos seu contracheque e margem disponível. Aprovação rápida, sem burocracia desnecessária.</p></div>
+          <div class="product-block"><strong>O que analisamos</strong><p>Renda mensal, histórico financeiro, margem disponível e documentação.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-page" id="produto-equity">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Pessoas</div>
+          <h3>Home / Car Equity</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Simular agora</a>
+        </div>
+        <div>
+          <p class="product-intro">Tem imóvel ou carro quitado? Use como garantia e acesse valores maiores com taxas bem menores e prazo longo para pagar.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Quem tem imóvel ou veículo e precisa de um valor mais alto com prazo longo. As taxas ficam muito menores com garantia real.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>O bem é avaliado e registrado como garantia — isso permite taxas muito menores, em alguns casos com até 10 anos para pagar.</p></div>
+          <div class="product-block"><strong>O que analisamos</strong><p>Valor e situação do bem, capacidade de pagamento e documentação.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-page" id="produto-bnpl">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Pessoas</div>
+          <h3>Aluguel de Celular</h3>
+          <small style="color:rgba(213,173,85,.6);font-size:.72rem;display:block;margin-top:.3rem;letter-spacing:.05em">"Buy Now, Pay Later"</small>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Saiba mais</a>
+        </div>
+        <div>
+          <p class="product-intro">Quer um celular novo mas não tem o dinheiro à vista e não tem margem no cartão? A Ardire resolve. Funciona como um crediário moderno — você paga mensalmente pelo uso do aparelho e, no último pagamento, tem a opção de comprar o celular pelo valor residual combinado ou simplesmente devolver.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Quem quer ter um smartphone sem comprometer tudo de uma vez — sem precisar de cartão de crédito com limite disponível ou dinheiro à vista.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>Escolha o aparelho, assine o contrato de locação e pague mensalmente. No final decide: compra pelo valor residual ou devolve. Simples assim.</p></div>
+          <div class="product-block"><strong>Seguro do aparelho incluso</strong><p>Todos os aparelhos contam com cobertura de seguro oferecida pela Ardire Soluções e Corretagem de Seguros — proteção contra roubo, furto e danos acidentais durante todo o período do contrato.</p></div>
+          <div class="product-block"><strong>Vantagens</strong><p>Sem entrada, parcelas acessíveis, sem burocracia de financiamento e flexibilidade total no final do contrato.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA LOCATÍCIA — fundo azul -->
+<section class="sec-dark" id="produto-garantia" style="padding-top:0">
+  <div class="container">
+    <div class="product-page">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Garantia Locatícia</div>
+          <h3>Garantia de Aluguel</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Falar sobre este produto</a>
+        </div>
+        <div>
+          <p class="product-intro">A Ardire Soluções oferece duas modalidades de garantia locatícia — uma alternativa moderna e ágil ao fiador tradicional, tanto para imobiliárias e locadores quanto para inquilinos.</p>
+          <div class="product-block">
+            <strong>Modalidade 1 — Fiança Locatícia Onerosa (sem SUSEP)</strong>
+            <p>Operada pela Ardire Soluções via CNAE de cobrança, no modelo utilizado por empresas como a Garante. O inquilino contrata a garantia diretamente, sem seguradora, com análise rápida e custo acessível.</p>
+          </div>
+          <div class="product-block">
+            <strong>Modalidade 2 — Seguro Fiança (com SUSEP)</strong>
+            <p>Garantia emitida via seguradora regulamentada pela SUSEP. Oferece cobertura formal ao locador em caso de inadimplência, com respaldo jurídico e regulatório completo.</p>
+          </div>
+          <div class="product-block">
+            <strong>Para imobiliárias e locadores</strong>
+            <p>Ofereça uma garantia moderna aos seus clientes sem depender de fiador. Processo ágil, cobertura garantida e gestão de inadimplência incluída.</p>
+          </div>
+          <div class="product-block">
+            <strong>Para inquilinos</strong>
+            <p>Alugue sem fiador. Análise rápida e custo mensal acessível — sem travar patrimônio próprio ou de terceiros.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEGUROS — fundo azul -->
+<section class="sec-dark" id="produto-seguros" style="padding-top:0">
+  <div class="container">
+    <div class="product-page">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Ardire Soluções e Corretagem de Seguros</div>
+          <h3>Seguros</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Cotar seguro</a>
+        </div>
+        <div>
+          <p class="product-intro">A Ardire Soluções atua como corretora e oferece toda a linha de seguros disponíveis no mercado. Nosso foco principal são os produtos mais utilizados pelos nossos clientes:</p>
+          <div class="product-block">
+            <strong>⭐ Seguro Prestamista — destaque</strong>
+            <p>Protege suas parcelas de crédito em caso de imprevistos como desemprego involuntário, invalidez temporária ou permanente e falecimento. Ideal para quem contrata qualquer linha de crédito.</p>
+          </div>
+          <div class="product-block">
+            <strong>⭐ Seguro de Celular — destaque</strong>
+            <p>Cobertura contra roubo, furto qualificado e danos acidentais do seu smartphone. Disponível para todos os clientes do programa de Aluguel de Celular e também avulso.</p>
+          </div>
+          <div class="product-block">
+            <strong>Seguro de Automóvel</strong>
+            <p>Para clientes que realizam financiamento de veículo via Home/Car Equity ou crédito pessoal, o seguro do automóvel pode ser estruturado junto à operação.</p>
+          </div>
+          <div class="product-block">
+            <strong>Demais seguros</strong>
+            <p>Seguro de vida, residencial, de móveis e imóveis e outras coberturas disponíveis conforme a necessidade do cliente. Consulte nossa equipe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA EMPRESAS — fundo branco -->
+<section class="sec-light" id="para-empresas">
+  <div class="container">
+    <div class="split-section reverse" style="margin-bottom:3.5rem">
+      <div class="reveal">
+        <div class="section-title">
+          <div class="eyebrow">Para Empresas</div>
+          <h2>Seu dinheiro preso nos recebíveis? A gente resolve</h2>
+          <p>Do comércio travado na maquininha à empresa com grande carteira de recebíveis — a Ardire tem a solução certa para destravar seu caixa com agilidade.</p>
+        </div>
+        <div class="actions">
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-dk">Falar com consultor</a>
+        </div>
+      </div>
+      <div class="split-photo reveal">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80"
+             alt="Soluções para empresas"
+             onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>Foto carrega após publicação</div>'">
+      </div>
+    </div>
+    <div class="grid-3">
+      <a href="#produto-maquininha" class="card destaque reveal">
+        <div class="destaque-badge">💳 Mais solicitado</div>
+        <div class="card-icon">💳</div>
+        <h3>Antecipação de Maquininha</h3>
+        <p>Vendeu no crédito mas o dinheiro fica preso semanas? Antecipe os recebíveis das suas maquininhas e tenha liquidez na hora.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-recebiveis" class="card reveal">
+        <div class="card-icon">📄</div>
+        <h3>Antecipação de Recebíveis</h3>
+        <p>Duplicatas, cheques, contratos, aluguéis — qualquer recebível com lastro pode virar dinheiro no seu caixa em poucos dias.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+      <a href="#produto-capital-giro" class="card reveal">
+        <div class="card-icon">🏪</div>
+        <h3>Capital de Giro</h3>
+        <p>Crédito para pagar fornecedor, comprar estoque ou não parar. Análise baseada no seu faturamento, sem burocracia.</p>
+        <span class="solution-link">Ver como funciona →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTOS EMPRESAS — fundo branco -->
+<section class="sec-light" id="produto-maquininha" style="padding-top:0">
+  <div class="container">
+    <div class="product-page">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Empresas</div>
+          <h3>Antecipação de Maquininha</h3>
+          <div class="destaque-badge" style="margin-top:.8rem;background:var(--gold-dk)">💳 Mais solicitado</div>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-dk" style="margin-top:1rem;display:block;text-align:center">Falar sobre este produto</a>
+        </div>
+        <div>
+          <p class="product-intro">Vendeu no crédito mas o dinheiro fica preso por semanas? Antecipe os recebíveis das suas maquininhas de cartão e tenha liquidez imediata para girar o negócio.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Comércios, lojas, restaurantes, salões e qualquer negócio que vende no crédito e débito via maquininha.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>Analisamos o histórico de vendas e antecipamos os recebíveis futuros — você recebe agora e o pagamento é feito conforme as vendas chegam.</p></div>
+          <div class="product-block"><strong>O que analisamos</strong><p>Volume de vendas mensais, histórico da maquininha, CNPJ e documentação básica.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-page" id="produto-recebiveis">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Empresas</div>
+          <h3>Antecipação de Recebíveis</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-dk" style="margin-top:1rem;display:block;text-align:center">Falar sobre este produto</a>
+        </div>
+        <div>
+          <p class="product-intro">Duplicatas, cheques, contratos, aluguéis de inquilinos, recebíveis médicos — qualquer recebível com lastro pode virar dinheiro no seu caixa.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Imobiliárias, clínicas, condomínios, distribuidoras e qualquer empresa que vende a prazo.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>Avaliamos seus recebíveis e antecipamos o valor com desconto. Em poucos dias o dinheiro entra no seu caixa.</p></div>
+          <div class="product-block"><strong>O que aceitamos</strong><p>Duplicatas, cheques, contratos de aluguel, recebíveis de cartão, NFs e qualquer recebível com lastro comprovável.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-page" id="produto-capital-giro">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Para Empresas</div>
+          <h3>Capital de Giro</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-dk" style="margin-top:1rem;display:block;text-align:center">Falar sobre este produto</a>
+        </div>
+        <div>
+          <p class="product-intro">Precisa pagar fornecedor, comprar estoque ou simplesmente não parar? A gente estrutura o crédito certo para o momento da sua empresa.</p>
+          <div class="product-block"><strong>Para quem é</strong><p>Micro e pequenas empresas que precisam de capital operacional com análise ágil.</p></div>
+          <div class="product-block"><strong>Como funciona</strong><p>Analisamos faturamento, recebíveis e histórico e estruturamos a melhor solução para o seu momento.</p></div>
+          <div class="product-block"><strong>O que analisamos</strong><p>Faturamento mensal, tempo de mercado, recebíveis disponíveis, CNPJ ativo e documentação.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COBRANÇA E ANÁLISE — volta azul -->
+<section class="sec-dark" id="produto-cobranca" style="padding-top:2rem">
+  <div class="watermark" id="wm-cobranca"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="product-page" style="border-top:none">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Ardire Soluções</div>
+          <h3>Cobrança e Recuperação</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Falar sobre este produto</a>
+        </div>
+        <div>
+          <p class="product-intro">Tem carteira de inadimplentes parada? A Ardire Soluções assume a gestão e trabalha para recuperar o máximo possível.</p>
+          <div class="product-block"><strong>Como funciona</strong><p>Assumimos a carteira: régua de cobrança, contato com devedores, negociação e acompanhamento até a recuperação.</p></div>
+          <div class="product-block"><strong>O que analisamos</strong><p>Tamanho da carteira, tempo de atraso, perfil dos devedores e potencial de recuperação.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-page" id="produto-analise">
+      <div class="product-box reveal">
+        <div>
+          <div class="eyebrow">Ardire Soluções</div>
+          <h3>Análise de Risco</h3>
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-secondary" style="margin-top:1rem;display:block;text-align:center">Falar sobre este produto</a>
+        </div>
+        <div>
+          <ul>
+            <li>Pesquisa em Serasa, SPC, Quod e outros bureaus de crédito</li>
+            <li>Análise de score, histórico e capacidade de pagamento</li>
+            <li>Validação de dados cadastrais e documentação</li>
+            <li>Relatório de risco para decisão de crédito ou locação com mais segurança</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA — azul -->
+<section class="sec-dark">
+  <div class="watermark" id="wm-como"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="split-section">
+      <div class="reveal">
+        <div class="section-title">
+          <div class="eyebrow">Como Funciona</div>
+          <h2>Da solicitação à liberação em poucos cliques</h2>
+          <p>Simples, rápido e sem surpresas. Do primeiro contato ao dinheiro na conta.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div><div class="step-title">Solicite pelo WhatsApp ou formulário</div><div class="step-desc">Sem compromisso e sem burocracia logo de cara. Poucos cliques e a gente já começa.</div></div></div>
+          <div class="step"><div class="step-num">2</div><div><div class="step-title">Análise rápida do seu perfil</div><div class="step-desc">Avaliamos sua situação com rapidez, sigilo e respeito. Sem constrangimento.</div></div></div>
+          <div class="step"><div class="step-num">3</div><div><div class="step-title">Proposta clara e sem letra miúda</div><div class="step-desc">Mostramos taxas, prazos e valores de forma transparente. Você decide sem pressão.</div></div></div>
+          <div class="step"><div class="step-num">4</div><div><div class="step-title">Dinheiro na conta</div><div class="step-desc">Aprovado e formalizado, liberamos com agilidade. Acompanhamos até o final.</div></div></div>
+        </div>
+      </div>
+      <div class="split-photo reveal">
+        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=900&q=80"
+             alt="Como funciona"
+             onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>Foto carrega após publicação</div>'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTIDORES — azul -->
+<section class="sec-dark" id="investidores">
+  <div class="watermark" id="wm-inv"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section-title reveal">
+      <div class="eyebrow">Relação com Investidores</div>
+      <h2>Parceiros estratégicos e capital institucional</h2>
+      <p>A Ardire Capital está estruturada para desenvolver relações com investidores e parceiros de capital interessados no mercado de crédito privado brasileiro.</p>
+    </div>
+    <div class="inv-grid" style="margin-bottom:2.5rem">
+      <div class="inv-card reveal"><h3>Operações estruturadas</h3><p>Oportunidades com lastro verificável, análise documental criteriosa e fluxo financeiro definido — organizadas para oferecer previsibilidade e controle.</p></div>
+      <div class="inv-card reveal"><h3>Crédito privado</h3><p>Atuação no mercado de crédito privado com foco em recebíveis e instrumentos de securitização conforme a Lei 14.430/2022.</p></div>
+      <div class="inv-card reveal"><h3>Relacionamento institucional</h3><p>Atendimento dedicado a investidores qualificados, family offices e parceiros estratégicos interessados no pipeline da Ardire.</p></div>
+      <div class="inv-card reveal"><h3>Seja um parceiro</h3><p>Correspondentes bancários, imobiliárias, contadores e consultores — temos um programa de parcerias com condições especiais.</p></div>
+    </div>
+    <p class="reveal" style="font-size:.76rem;color:rgba(255,255,255,.28);line-height:1.6;max-width:680px">Este site possui caráter institucional e não representa oferta pública de valores mobiliários ou recomendação de investimento. Operações específicas são tratadas de forma privada conforme a regulamentação aplicável.</p>
+  </div>
+</section>
+
+<!-- CONTATO — branco -->
+<section class="sec-light" id="contato">
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="eyebrow">Contato</div>
+      <h2>Fale com a ARDIRE</h2>
+      <p>Nossa equipe está pronta para entender sua situação e apresentar a melhor solução. Sem enrolação.</p>
+    </div>
+    <div class="contact-box">
+      <form class="reveal" onsubmit="sendEmail(event)">
+        <label>Nome</label>
+        <input type="text" id="nome" placeholder="Seu nome completo" required>
+        <label>Telefone / WhatsApp</label>
+        <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+        <label>E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" required>
+        <label>O que você precisa?</label>
+        <select id="interesse">
+          <option value="">Selecione...</option>
+          <optgroup label="Para Pessoas">
+            <option>Crédito INSS / Beneficiários</option>
+            <option>Crédito CLT</option>
+            <option>Home Equity / Car Equity</option>
+            <option>Aluguel de celular</option>
+            <option>Garantia locatícia</option>
+            <option>Seguros</option>
+          </optgroup>
+          <optgroup label="Para Empresas">
+            <option>Antecipação de maquininha</option>
+            <option>Antecipação de recebíveis</option>
+            <option>Capital de giro</option>
+            <option>Cobrança e recuperação</option>
+            <option>Análise de risco</option>
+          </optgroup>
+          <optgroup label="Outros">
+            <option>Parceria / Correspondente</option>
+            <option>Investidor</option>
+          </optgroup>
+        </select>
+        <label>Mensagem</label>
+        <textarea id="mensagem" placeholder="Conte um pouco mais sobre o que você precisa..."></textarea>
+        <button type="submit" class="btn btn-primary" style="border:0;width:100%">Enviar mensagem</button>
+      </form>
+      <div class="contact-info reveal">
+        <h3>Informações de contato</h3>
+        <p><strong>WhatsApp:</strong> (16) 98126-6908</p>
+        <p><strong>E-mail:</strong> contato@ardirecapital.com.br</p>
+        <p><strong>Regulamentação:</strong> Securitizadora · Lei 14.430/2022</p>
+        <div class="actions" style="margin-top:22px;flex-direction:column;gap:10px">
+          <a href="https://wa.me/5516981266908" target="_blank" class="btn btn-primary">Chamar no WhatsApp</a>
+          <a href="mailto:contato@ardirecapital.com.br" class="btn btn-dk">Enviar e-mail</a>
+        </div>
+        <div class="socials">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="logo-ardire.png" alt="ARDIRE Capital" style="height:40px;margin-bottom:12px;object-fit:contain" onerror="this.style.display='none'">
+        <p>Soluções em crédito para empresas e pessoas. Securitizadora constituída sob a Lei 14.430/2022.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <a href="#sobre">Sobre</a>
+        <a href="#para-pessoas">Para Pessoas</a>
+        <a href="#para-empresas">Para Empresas</a>
+        <a href="#investidores">Investidores</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <a href="https://wa.me/5516981266908" target="_blank">(16) 98126-6908</a>
+        <a href="mailto:contato@ardirecapital.com.br">contato@ardirecapital.com.br</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 ARDIRE Capital. Todos os direitos reservados. Este site possui caráter institucional e não representa promessa de aprovação de crédito, oferta pública de valores mobiliários ou recomendação de investimento. A aprovação de crédito está sujeita à análise e elegibilidade.</div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5516981266908" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // MARCA D'ÁGUA
+  const termos=['CCB','Duplicata','CR','CRI','CRA','FIDC','Debênture','Recebível','Nota Comercial','CCE','Cessão','Lastro','Securitização','Título','CPR','CDCA'];
+  function buildWatermark(id){
+    const el=document.getElementById(id);
+    if(!el)return;
+    const W=el.offsetWidth||1200,H=el.offsetHeight||600;
+    const cols=Math.ceil(W/180),rows=Math.ceil(H/55);
+    let html='';
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const t=termos[(r*cols+c)%termos.length];
+      html+=`<span class="watermark-text" style="left:${c*180+(r%2)*90}px;top:${r*50}px">${t}</span>`;
+    }
+    el.innerHTML=html;
+  }
+  window.addEventListener('load',()=>['wm-hero','wm-pessoas','wm-cobranca','wm-como','wm-inv'].forEach(buildWatermark));
+
+  // MENU MOBILE
+  const hamburger=document.getElementById('hamburger');
+  const menu=document.getElementById('menu');
+  const dropdowns=document.querySelectorAll('.nav-dropdown');
+  hamburger.addEventListener('click',()=>menu.classList.toggle('active'));
+  dropdowns.forEach(d=>{
+    const t=d.querySelector('.nav-dropdown-toggle');
+    if(!t)return;
+    t.addEventListener('click',e=>{
+      e.stopPropagation();
+      dropdowns.forEach(x=>{if(x!==d)x.classList.remove('active')});
+      if(window.innerWidth<=980)d.classList.toggle('active');
+    });
+  });
+  document.querySelectorAll('.menu a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('active');dropdowns.forEach(d=>d.classList.remove('active'))}));
+
+  // REVEAL
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+  // AJUSTA CAPITAL
+  function ajustar(){const a=document.getElementById('ardireRef'),c=document.getElementById('capitalRef');if(a&&c)c.style.width=a.offsetWidth+'px';}
+  window.addEventListener('load',()=>{ajustar();setTimeout(ajustar,300)});
+  window.addEventListener('resize',ajustar);
+
+  // FORMULÁRIO
+  function sendEmail(e){
+    e.preventDefault();
+    const nome=document.getElementById('nome').value;
+    const tel=document.getElementById('telefone').value;
+    const email=document.getElementById('email').value;
+    const interesse=document.getElementById('interesse').value;
+    const msg=document.getElementById('mensagem').value;
+    const assunto=encodeURIComponent('Contato pelo site ARDIRE Capital');
+    const corpo=encodeURIComponent('Nome: '+nome+'\nTelefone: '+tel+'\nE-mail: '+email+'\nInteresse: '+interesse+'\n\nMensagem:\n'+msg);
+    window.location.href='mailto:contato@ardirecapital.com.br?subject='+assunto+'&body='+corpo;
+  }
+</script>
+</body>
+</html>
