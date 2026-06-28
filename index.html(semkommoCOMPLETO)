@@ -233,12 +233,12 @@ footer p,footer a{color:var(--muted);display:block;margin-bottom:7px;font-size:.
 
 /* WA FLOAT */
 .wa-wrap{position:fixed;right:22px;bottom:22px;z-index:998;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-.wa-float{display:flex;align-items:center;gap:10px;text-decoration:none;background:#25d366;border-radius:50px;padding:13px 20px 13px 15px;box-shadow:0 6px 24px rgba(37,211,102,.45);animation:wa-b 3s ease-in-out infinite}
+.wa-float{display:flex;align-items:center;justify-content:center;text-decoration:none;background:#25d366;border-radius:50%;width:58px;height:58px;padding:0;box-shadow:0 6px 24px rgba(37,211,102,.45);animation:wa-b 3s ease-in-out infinite}
 .wa-float:hover{box-shadow:0 8px 32px rgba(37,211,102,.6);transform:scale(1.04);animation:none}
 @keyframes wa-b{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .wa-float svg{width:26px;height:26px;fill:white;flex-shrink:0}
-.wa-label{font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;color:white;white-space:nowrap;letter-spacing:.04em}
-.wa-hours{font-size:.68rem;color:rgba(255,255,255,.7);text-align:right;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em}
+.wa-label{display:none}
+.wa-hours{display:none}
 .mobile-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:997;background:var(--gold);padding:14px;text-align:center}
 .mobile-cta a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--navy3);letter-spacing:.08em;text-transform:uppercase}
 
@@ -290,9 +290,6 @@ height:auto!important;
   .top-products-inner{flex-wrap:wrap}
   .tp-item{min-width:50%;border-bottom:1px solid var(--border)}
   section{padding:60px 0}
-  .wa-label{display:none}
-  .wa-float{padding:14px;border-radius:50%}
-  .wa-hours{display:none}
   .mobile-cta{display:block}
   .sim-row{grid-template-columns:1fr 1fr;gap:10px}.sim-modal-row{grid-template-columns:1fr}
   .hero-logo img{width:min(560px,95vw);height:auto}
@@ -332,25 +329,25 @@ height:auto!important;
   <div class="modal-box">
     <button class="modal-close" onclick="closeSimModal()">✕</button>
     <h3>Enviar simulação</h3>
-    <p>Informe seus dados para encaminhar a simulação por e-mail ou iniciar atendimento pelo WhatsApp.</p>
+    <p>Informe seus dados para enviar a simulação diretamente para a equipe da Ardire Capital. Depois, se desejar, também é possível iniciar o atendimento pelo WhatsApp.</p>
     <div class="sim-summary" id="sim-summary">Preencha o simulador para gerar o resumo.</div>
     <div class="sim-modal-row">
       <div>
         <label>Nome</label>
-        <input type="text" id="sim-nome" placeholder="Seu nome">
+        <input type="text" id="sim-nome" placeholder="Nome e sobrenome" autocomplete="name" maxlength="80">
       </div>
       <div>
         <label>Telefone / WhatsApp</label>
-        <input type="tel" id="sim-telefone" placeholder="(00) 00000-0000">
+        <input type="tel" id="sim-telefone" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="20">
       </div>
     </div>
     <label>E-mail</label>
-    <input type="email" id="sim-email" placeholder="seu@email.com">
+    <input type="email" id="sim-email" placeholder="seu@email.com" autocomplete="email" maxlength="120">
     <div class="sim-actions">
       <button type="button" class="btn btn-primary" onclick="sendSimWhatsapp()" style="border:0;flex:1">Enviar pelo WhatsApp</button>
-      <button type="button" class="btn btn-dk" onclick="sendSimEmail()" style="flex:1">Enviar por e-mail</button>
+      <button type="button" class="btn btn-dk" onclick="sendSimDireto()" style="flex:1">Enviar direto para a Ardire</button>
     </div>
-    <p style="font-size:.74rem;color:#94a3b8;margin-top:12px">Em site estático, o envio por e-mail abre o aplicativo de e-mail do usuário com a mensagem preenchida. Para envio automático direto pelo site, é necessário integrar um serviço de formulário, CRM ou backend.</p>
+    <p style="font-size:.74rem;color:#94a3b8;margin-top:12px">Ao enviar, os dados serão encaminhados diretamente para contato@ardirecapital.com.br por integração de formulário. Na primeira utilização, o serviço pode exigir confirmação no e-mail da Ardire.</p>
   </div>
 </div>
 
@@ -511,27 +508,6 @@ height:auto!important;
   </div>
 </div>
 </section>
-
-<!-- PARCEIROS -->
-<div class="parc-section">
-<div class="parc-label">Parceiros e Integrações Estratégicas</div>
-<div class="car-wrap">
-  <div class="car-track">
-    <div class="parc-logo"><img src="https://www.celcoin.com.br/wp-content/uploads/2024/10/Logo-Celcoin-Roxo.svg" alt="Celcoin" onerror="this.style.display='none'"><span class="parc-nome">Celcoin</span></div>
-    <div class="parc-logo"><img src="https://grupoviacapital.com/wp-content/uploads/2023/07/via-capital-logo-1.svg" alt="Via Capital" onerror="this.style.display='none'"><span class="parc-nome">Via Capital</span></div>
-    <div class="parc-logo"><img src="https://www.tigrebranco.com.br/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLOGO_PRETO.56ab7630.png&w=640&q=75" alt="Tigre Branco" onerror="this.style.display='none'"><span class="parc-nome">Tigre Branco</span></div>
-    <div class="parc-logo"><img src="https://www.cerc.com/wp-content/themes/temacerc/images/cerc.png" alt="CERC" onerror="this.style.display='none'"><span class="parc-nome">CERC</span></div>
-    <div class="parc-logo"><img src="b3.jpeg" alt="B3"><span class="parc-nome">B3</span></div>
-    <div class="parc-logo"><img src="serasa.jpeg" alt="Serasa"><span class="parc-nome">Serasa</span></div>
-    <div class="parc-logo"><img src="https://www.celcoin.com.br/wp-content/uploads/2024/10/Logo-Celcoin-Roxo.svg" alt="Celcoin" onerror="this.style.display='none'"><span class="parc-nome">Celcoin</span></div>
-    <div class="parc-logo"><img src="https://grupoviacapital.com/wp-content/uploads/2023/07/via-capital-logo-1.svg" alt="Via Capital" onerror="this.style.display='none'"><span class="parc-nome">Via Capital</span></div>
-    <div class="parc-logo"><img src="https://www.tigrebranco.com.br/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLOGO_PRETO.56ab7630.png&w=640&q=75" alt="Tigre Branco" onerror="this.style.display='none'"><span class="parc-nome">Tigre Branco</span></div>
-    <div class="parc-logo"><img src="https://www.cerc.com/wp-content/themes/temacerc/images/cerc.png" alt="CERC" onerror="this.style.display='none'"><span class="parc-nome">CERC</span></div>
-    <div class="parc-logo"><img src="b3.jpeg" alt="B3"><span class="parc-nome">B3</span></div>
-    <div class="parc-logo"><img src="serasa.jpeg" alt="Serasa"><span class="parc-nome">Serasa</span></div>
-  </div>
-</div>
-</div>
 
 <!-- PARA PESSOAS -->
 <section class="sec-dark" id="para-pessoas">
@@ -875,7 +851,7 @@ height:auto!important;
     <p>Nossa equipe está pronta para entender sua situação e apresentar a melhor solução. Sem enrolação.</p>
   </div>
   <div class="contact-box">
-    <form class="reveal" onsubmit="sendWA(event)">
+    <form class="reveal" onsubmit="sendContatoDireto(event)">
       <label>Nome completo</label>
       <input type="text" id="nome" placeholder="Seu nome completo" required>
       <label>Telefone / WhatsApp</label>
@@ -910,11 +886,8 @@ height:auto!important;
       <label>Mensagem</label>
       <textarea id="mensagem" placeholder="Conte um pouco mais sobre o que você precisa..."></textarea>
       <div class="form-btns">
-        <button type="submit" class="btn btn-primary" style="border:0;width:100%">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Enviar pelo WhatsApp
-        </button>
-        <button type="button" class="btn btn-dk" onclick="sendContatoEmail()" style="width:100%;justify-content:center">Enviar por e-mail</button>
+        <button type="submit" class="btn btn-primary" style="border:0;width:100%">Enviar direto para a Ardire</button>
+        <button type="button" class="btn btn-dk" onclick="sendContatoWhatsapp()" style="width:100%;justify-content:center">Enviar também pelo WhatsApp</button>
       </div>
       <p style="font-size:.74rem;color:#94a3b8;text-align:center;margin-top:10px">Seus dados são protegidos pela <span class="lgpd-link" onclick="document.getElementById('lgpdModal').classList.add('open')">LGPD — Política de Privacidade</span>.</p>
     </form>
@@ -974,10 +947,8 @@ height:auto!important;
 
 <!-- WA FLOAT -->
 <div class="wa-wrap">
-  <div class="wa-hours">24h · Preferencial 9h–19h</div>
   <a href="https://wa.me/5516981266908" target="_blank" class="wa-float" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span class="wa-label">Falar no WhatsApp</span>
   </a>
 </div>
 
@@ -1014,6 +985,99 @@ const prodConfig={
 let ultimaSimulacao=null;
 
 function moedaBR(valor){return 'R$ '+Number(valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+const FORM_ENDPOINT='https://formsubmit.co/ajax/contato@ardirecapital.com.br';
+async function enviarLeadDireto(payload){
+  const dados={...payload,_captcha:'false',_template:'table',_autoresponse:'Recebemos seus dados na Ardire Capital. Nossa equipe analisará sua solicitação e retornará pelo contato informado.'};
+  const resp=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(dados)});
+  if(!resp.ok)throw new Error('Falha no envio do formulário.');
+  return resp.json().catch(()=>({success:true}));
+}
+function setBtnLoading(btn,loading,textoNormal){
+  if(!btn)return;
+  btn.disabled=!!loading;
+  btn.dataset.originalText=btn.dataset.originalText||textoNormal||btn.textContent;
+  btn.textContent=loading?'Enviando...':btn.dataset.originalText;
+}
+
+
+// VALIDAÇÃO DE DADOS — evita nome incompleto, telefone falso e e-mail aleatório
+function normalizarTexto(txt){
+  return String(txt||'').trim().replace(/\s+/g,' ');
+}
+
+function apenasDigitos(txt){
+  return String(txt||'').replace(/\D/g,'');
+}
+
+function validarNomeCompleto(nome){
+  const n=normalizarTexto(nome);
+  const partes=n.split(' ').filter(Boolean);
+  if(partes.length<2)return {ok:false,msg:'Informe nome e sobrenome.'};
+  if(n.length<5)return {ok:false,msg:'Informe seu nome completo.'};
+  if(/[^a-zA-ZÀ-ÿ' -]/.test(n))return {ok:false,msg:'O nome não deve conter números ou símbolos.'};
+  if(/(.)\1{3,}/i.test(n.replace(/\s/g,'')))return {ok:false,msg:'Informe um nome válido.'};
+  const invalidos=['teste','testando','asdf','qwerty','abc','abcd','nome','sobrenome','cliente','usuario','usuário','nao sei','não sei'];
+  const lower=n.toLowerCase();
+  if(invalidos.some(x=>lower.includes(x)))return {ok:false,msg:'Informe um nome real para continuar.'};
+  for(const parte of partes){
+    const limpa=parte.replace(/['-]/g,'');
+    if(limpa.length<2)return {ok:false,msg:'Informe nome e sobrenome válidos.'};
+  }
+  return {ok:true,valor:n};
+}
+
+function validarTelefoneBrasil(tel){
+  const d=apenasDigitos(tel);
+  let n=d;
+  if(n.startsWith('55')&&n.length>=12)n=n.slice(2);
+  if(!(n.length===10||n.length===11))return {ok:false,msg:'Informe um telefone brasileiro válido com DDD.'};
+  const ddd=n.slice(0,2);
+  const numero=n.slice(2);
+  const dddsValidos=new Set(['11','12','13','14','15','16','17','18','19','21','22','24','27','28','31','32','33','34','35','37','38','41','42','43','44','45','46','47','48','49','51','53','54','55','61','62','63','64','65','66','67','68','69','71','73','74','75','77','79','81','82','83','84','85','86','87','88','89','91','92','93','94','95','96','97','98','99']);
+  if(!dddsValidos.has(ddd))return {ok:false,msg:'Informe um DDD válido.'};
+  if(/^(\d)\1+$/.test(n))return {ok:false,msg:'Informe um telefone real. Sequências repetidas não são aceitas.'};
+  if(/(0{6,}|1{6,}|2{6,}|3{6,}|4{6,}|5{6,}|6{6,}|7{6,}|8{6,}|9{6,})/.test(n))return {ok:false,msg:'Informe um telefone real. Sequências repetidas não são aceitas.'};
+  if(['00000000','11111111','12345678','123456789','987654321','99999999','999999999'].includes(numero))return {ok:false,msg:'Informe um telefone real.'};
+  if(n.length===11 && n[2]!=='9')return {ok:false,msg:'Celular deve conter o nono dígito após o DDD.'};
+  return {ok:true,valor:n};
+}
+
+function validarEmail(email){
+  const e=normalizarTexto(email).toLowerCase();
+  if(!e)return {ok:false,msg:'Informe um e-mail válido.'};
+  const regex=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if(!regex.test(e))return {ok:false,msg:'Informe um e-mail válido.'};
+  const [local,dominio]=e.split('@');
+  if(!local||!dominio)return {ok:false,msg:'Informe um e-mail válido.'};
+  if(local.length<3)return {ok:false,msg:'Informe um e-mail válido.'};
+  if(/^(.)\1{4,}$/.test(local))return {ok:false,msg:'Informe um e-mail real.'};
+  if(/(0{5,}|1{5,}|2{5,}|3{5,}|4{5,}|5{5,}|6{5,}|7{5,}|8{5,}|9{5,})/.test(local))return {ok:false,msg:'E-mails com sequência repetida não são aceitos.'};
+  const locaisInvalidos=['teste','test','asdf','qwerty','abc','abcd','email','nome','usuario','usuário','naosei','nao-sei','sememail'];
+  if(locaisInvalidos.includes(local)||locaisInvalidos.some(x=>local===x+'123'||local===x+'1234'))return {ok:false,msg:'Informe um e-mail real para continuar.'};
+  const dominiosInvalidos=['teste.com','test.com','email.com','exemplo.com','example.com','dominio.com','site.com','naosei.com'];
+  if(dominiosInvalidos.includes(dominio))return {ok:false,msg:'Informe um domínio de e-mail real.'};
+  if(!dominio.includes('.'))return {ok:false,msg:'Informe um e-mail válido.'};
+  return {ok:true,valor:e};
+}
+
+function validarDadosLead({nome,tel,email},opcoes={}){
+  const exigeTelefone=opcoes.exigeTelefone!==false;
+  const exigeEmail=opcoes.exigeEmail!==false;
+  const vn=validarNomeCompleto(nome);
+  if(!vn.ok)return vn;
+  let vt={ok:true,valor:normalizarTexto(tel)};
+  let ve={ok:true,valor:normalizarTexto(email)};
+  if(exigeTelefone||normalizarTexto(tel)){
+    vt=validarTelefoneBrasil(tel);
+    if(!vt.ok)return vt;
+  }
+  if(exigeEmail||normalizarTexto(email)){
+    ve=validarEmail(email);
+    if(!ve.ok)return ve;
+  }
+  return {ok:true,nome:vn.valor,tel:vt.valor,email:ve.valor};
+}
 
 function getSimulacao(){
   const produtoEl=document.getElementById('sim-produto');
@@ -1119,27 +1183,38 @@ function dadosSimContato(){
   const nome=(document.getElementById('sim-nome').value||'').trim();
   const tel=(document.getElementById('sim-telefone').value||'').trim();
   const email=(document.getElementById('sim-email').value||'').trim();
-  return {nome,tel,email};
+  const validacao=validarDadosLead({nome,tel,email},{exigeTelefone:true,exigeEmail:true});
+  if(!validacao.ok){alert(validacao.msg);return null}
+  return {nome:validacao.nome,tel:validacao.tel,email:validacao.email};
 }
 
 function sendSimWhatsapp(){
   const resumo=resumoSimulacaoTexto();
   if(!resumo){alert('Preencha o valor desejado para gerar a simulação.');return}
   const d=dadosSimContato();
-  if(!d.tel&&!d.email){alert('Informe telefone ou e-mail para continuar.');return}
-  const texto=encodeURIComponent('Olá, Ardire Capital. Fiz uma simulação de crédito pelo site e quero atendimento.\n\n'+(d.nome?'Nome: '+d.nome+'\n':'')+(d.tel?'Telefone: '+d.tel+'\n':'')+(d.email?'E-mail: '+d.email+'\n':'')+'\n'+resumo);
+  if(!d)return;
+  const texto=encodeURIComponent('Olá, Ardire Capital. Fiz uma simulação de crédito pelo site e quero atendimento.\n\n'+'Nome: '+d.nome+'\n'+'Telefone: '+d.tel+'\n'+'E-mail: '+d.email+'\n'+'\n'+resumo);
   window.open('https://wa.me/5516981266908?text='+texto,'_blank');
 }
 
-function sendSimEmail(){
+async function sendSimDireto(){
   const resumo=resumoSimulacaoTexto();
   if(!resumo){alert('Preencha o valor desejado para gerar a simulação.');return}
   const d=dadosSimContato();
-  if(!d.email&&!d.tel){alert('Informe e-mail ou telefone para continuar.');return}
-  const assunto=encodeURIComponent('Simulação de crédito pelo site');
-  const corpo=encodeURIComponent('Olá, Ardire Capital. Fiz uma simulação de crédito pelo site e quero atendimento.\n\n'+(d.nome?'Nome: '+d.nome+'\n':'')+(d.tel?'Telefone: '+d.tel+'\n':'')+(d.email?'E-mail: '+d.email+'\n':'')+'\n'+resumo);
-  window.location.href='mailto:contato@ardirecapital.com.br?subject='+assunto+'&body='+corpo;
+  if(!d)return;
+  const btn=event&&event.currentTarget?event.currentTarget:null;
+  setBtnLoading(btn,true,'Enviar direto para a Ardire');
+  try{
+    await enviarLeadDireto({origem:'Simulador de crédito do site',_subject:'Nova simulação de crédito pelo site',nome:d.nome,telefone:d.tel,email:d.email,resumo_da_simulacao:resumo});
+    alert('Simulação enviada para a Ardire Capital. Nossa equipe retornará pelo contato informado.');
+    closeSimModal();
+  }catch(e){
+    alert('Não foi possível enviar diretamente agora. Tente novamente ou chame pelo WhatsApp.');
+  }finally{
+    setBtnLoading(btn,false,'Enviar direto para a Ardire');
+  }
 }
+function sendSimEmail(){sendSimDireto()}
 
 document.addEventListener('DOMContentLoaded',calcSimulador);
 const simProdutoEl=document.getElementById('sim-produto');
@@ -1172,29 +1247,56 @@ function toggleFaq(btn){
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 
-// FORM → WHATSAPP
-function montarContatoTexto(){
+// FORMULÁRIO DE CONTATO → ENVIO DIRETO E WHATSAPP
+function getContatoDados(){
   const nome=document.getElementById('nome').value.trim();
   const tel=document.getElementById('telefone').value.trim();
   const email=document.getElementById('email').value.trim();
   const int=document.getElementById('interesse').value;
   const msg=document.getElementById('mensagem').value.trim();
-  if(!nome||!tel||!email){alert('Preencha nome, telefone e e-mail para continuar.');return null}
-  return `Olá, Ardire Capital!\n\nNome: ${nome}\nTelefone: ${tel}\nE-mail: ${email}${int?'\nInteresse: '+int:''}${msg?'\n\nMensagem:\n'+msg:''}`;
+  const validacao=validarDadosLead({nome,tel,email},{exigeTelefone:true,exigeEmail:true});
+  if(!validacao.ok){alert(validacao.msg);return null}
+  return {nome:validacao.nome,tel:validacao.tel,email:validacao.email,int,msg};
 }
 
-function sendWA(e){
+function montarContatoTexto(){
+  const d=getContatoDados();
+  if(!d)return null;
+  let texto='Olá, Ardire Capital!\n\n';
+  texto+='Nome: '+d.nome+'\n';
+  texto+='Telefone: '+d.tel+'\n';
+  texto+='E-mail: '+d.email;
+  if(d.int)texto+='\nInteresse: '+d.int;
+  if(d.msg)texto+='\n\nMensagem:\n'+d.msg;
+  return texto;
+}
+
+
+async function sendContatoDireto(e){
   e.preventDefault();
+  const d=getContatoDados();
+  if(!d)return;
+  const btn=e&&e.submitter?e.submitter:document.querySelector('#contato button[type="submit"]');
+  setBtnLoading(btn,true,'Enviar direto para a Ardire');
+  try{
+    await enviarLeadDireto({origem:'Formulário de contato do site',_subject:'Novo contato pelo site Ardire Capital',nome:d.nome,telefone:d.tel,email:d.email,interesse:d.int||'Não informado',mensagem:d.msg||'Não informada'});
+    alert('Contato enviado para a Ardire Capital. Nossa equipe retornará pelo contato informado.');
+    document.querySelector('#contato form').reset();
+  }catch(err){
+    alert('Não foi possível enviar diretamente agora. Tente novamente ou chame pelo WhatsApp.');
+  }finally{
+    setBtnLoading(btn,false,'Enviar direto para a Ardire');
+  }
+}
+
+function sendContatoWhatsapp(){
   const texto=montarContatoTexto();
   if(!texto)return;
   window.open(`https://wa.me/5516981266908?text=${encodeURIComponent(texto)}`,'_blank');
 }
 
-function sendContatoEmail(){
-  const texto=montarContatoTexto();
-  if(!texto)return;
-  window.location.href='mailto:contato@ardirecapital.com.br?subject='+encodeURIComponent('Contato pelo site Ardire Capital')+'&body='+encodeURIComponent(texto);
-}
+function sendWA(e){sendContatoDireto(e)}
+function sendContatoEmail(){const fakeEvent={preventDefault(){},submitter:null};sendContatoDireto(fakeEvent)}
 </script>
 </body>
 </html>
